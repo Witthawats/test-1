@@ -31,8 +31,7 @@ app.post('/Member', (req, res) => {
 
  // 3 เรียกดูสมาชิกด้วยid
  app.get('/GetMember/:id', async (req, res) => {
-    const { id } = req.params; 
-  
+    const  {id}  = req.params; 
     try {
         await Member.findById(id)
         .then(  result =>{  if (result) {
@@ -57,7 +56,8 @@ app.post('/Member', (req, res) => {
 app.put('/UpdateMember/:id', async (req, res) => {
     const payload = req.body;
     const { id } = req.params;
-    const product = await Member.findByIdAndUpdate(id, { $set: payload }).then(result => {
+  try{
+    await Member.findByIdAndUpdate(id, { $set: payload }).then(result => {
         if (result) {
             res.status(200).json({
                  result
@@ -67,14 +67,21 @@ app.put('/UpdateMember/:id', async (req, res) => {
                 message: '404 not found'
             });
         }
-    }); 
-
+    });    
+  } 
+   catch (error) { 
+    console.log(error)
+    res.status(404).json({
+        message: '404 error'
+    });
+   }
 });
 
 //5 ลบข้อมูลสมาชิกด้วยid 
 app.delete('/DeleteMember/:id', async (req, res) => {
     const { id } = req.params;
   
+   try{
     await Member.findByIdAndDelete(id).then(result => {
         if (result) {
             res.status(200).json({
@@ -86,7 +93,13 @@ app.delete('/DeleteMember/:id', async (req, res) => {
             });
         }
     }); 
-  
+   } 
+   catch (error) { 
+    console.log(error)
+    res.status(404).json({
+        message: '404 error'
+    });
+   }
   });
 
   //6 ดูครอสทั้งหมด  
@@ -134,23 +147,31 @@ app.get('/GetCourses/:id', async (req, res) => {
 app.put('/Updatecourses/:id', async (req, res) => {
     const payload = req.body;
     const { id } = req.params;
-    const product = await Datacourses.findByIdAndUpdate(id, { $set: payload }).then(result => {
-        if (result) {
-            res.status(200).json({
-                result
-            });
-        } else {
-            res.status(404).json({
-                message: '404 not found'
-            });
-        }
-    });
+    try{
+        await Datacourses.findByIdAndUpdate(id, { $set: payload }).then(result => {
+            if (result) {
+                res.status(200).json({
+                     result
+                });
+            } else {
+                res.status(404).json({
+                    message: '404 not found'
+                });
+            }
+        });    
+      } 
+       catch (error) { 
+        console.log(error)
+        res.status(404).json({
+            message: '404 error'
+        });
+       }
 });
 
 //10 ลบข้อมูลcoursesด้วยid
 app.delete('/Deletecourses/:id', async (req, res) => {
-    const { id } = req.params;
-  
+    const { id } = req.params;  
+   try{
     await Datacourses.findByIdAndDelete(id).then(result => {
         if (result) {
             res.status(200).json({
@@ -162,6 +183,13 @@ app.delete('/Deletecourses/:id', async (req, res) => {
             });
         }
     }); 
+   } 
+   catch (error) { 
+    console.log(error)
+    res.status(404).json({
+        message: '404 error'
+    });
+   }
   
   }); 
 
@@ -213,34 +241,49 @@ app.get('/GetEnroll/:id', async (req, res) => {
 app.put('/UpdateEnroll/:id', async (req, res) => {
     const payload = req.body;
     const { id } = req.params;
-    const product = await DataEnroll.findByIdAndUpdate(id, { $set: payload }).then(result => {
-        if (result) {
-            res.status(200).json({
-                result
-            });
-        } else {
-            res.status(404).json({
-                message: '404 not found'
-            });
-        }
-    });
+    try{
+        await DataEnroll.findByIdAndUpdate(id, { $set: payload }).then(result => {
+            if (result) {
+                res.status(200).json({
+                     result
+                });
+            } else {
+                res.status(404).json({
+                    message: '404 not found'
+                });
+            }
+        });    
+      } 
+       catch (error) { 
+        console.log(error)
+        res.status(404).json({
+            message: '404 error'
+        });
+       }
 });
 
 //15 ลบข้อมูลenroll
 app.delete('/DeleteEnroll/:id', async (req, res) => {
     const { id } = req.params;
-  
-    await DataEnroll.findByIdAndDelete(id).then(result => {
-        if (result) {
-            res.status(200).json({
-                 result
-            });
-        } else {
-            res.status(404).json({
-                message: '404 not found'
-            });
-        }
-    }); 
+    try{
+        await DataEnroll.findByIdAndDelete(id).then(result => {
+            if (result) {
+                res.status(200).json({
+                    result
+                });
+            } else {
+                res.status(404).json({
+                    message: '404 not found'
+                });
+            }
+        }); 
+       } 
+       catch (error) { 
+        console.log(error)
+        res.status(404).json({
+            message: '404 error'
+        });
+       }
   
   }); 
 
