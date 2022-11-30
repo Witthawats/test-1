@@ -32,6 +32,7 @@ app.post('/Member', (req, res) => {
  // 3 เรียกดูสมาชิกด้วยid
  app.get('/GetMember/:id', async (req, res) => {
     const { id } = req.params; 
+  
     try {
         await Member.findById(id)
         .then(  result =>{  if (result) {
@@ -251,12 +252,10 @@ app.get('/GetEnrollm_id/:m_id', async (req, res) => {
         await DataEnroll.find(req.params)
         .then(  result =>{  
            
-         
-            if (result) {
-            res.status(200).json(
-               result
-            );
-        } else {
+            if(result.length>0){
+                res.status(200).json(
+                    result
+            )} else {
             res.status(404).json({
                 message: '404 not found'
             });
@@ -271,16 +270,16 @@ app.get('/GetEnrollm_id/:m_id', async (req, res) => {
 
 //17 หาข้อมูลenrollด้วยc_id
 app.get('/GetEnrollc_id/:c_id', async (req, res) => {
+   console.log(req.params)
     try {
         await DataEnroll.find(req.params)
         .then(  result =>{  
            
-         
-            if (result) {
+           if(result.length>0){
             res.status(200).json(
-               result
-            );
-        } else {
+                result
+        )}
+            else {  
             res.status(404).json({
                 message: '404 not found'
             });
